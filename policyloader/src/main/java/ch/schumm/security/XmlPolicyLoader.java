@@ -11,7 +11,7 @@ import javax.xml.bind.Unmarshaller;
 
 import ch.schumm.security.policy.Policy;
 
-public class PolicyLoader {
+public class XmlPolicyLoader {
 	
 	public List<Policy> loadPolicies() {
 		List<Policy> policies = new ArrayList<Policy>(); 

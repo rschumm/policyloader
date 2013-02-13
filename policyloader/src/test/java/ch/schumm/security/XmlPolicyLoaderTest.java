@@ -8,11 +8,11 @@ import org.junit.Test;
 
 import ch.schumm.security.policy.Policy;
 
-public class PolicyLoaderTest {
+public class XmlPolicyLoaderTest {
 
 	@Test
 	public void testLoader() {
-		PolicyLoader policyLoader = new PolicyLoader();
+		XmlPolicyLoader policyLoader = new XmlPolicyLoader();
 		
 		List<Policy> policies = policyLoader.loadPolicies();
 		
@@ -24,7 +24,7 @@ public class PolicyLoaderTest {
 	
 	@Test
 	public void testInstatiate() {
-		PolicyLoader loader = new PolicyLoader(); 
+		XmlPolicyLoader loader = new XmlPolicyLoader(); 
 		Policy policyForName = loader.instatiatePolicyForName("ch.schumm.security.policy.ErstePolicy");
 		assertEquals("eins", policyForName.getName()); 
 		

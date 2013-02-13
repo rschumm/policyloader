@@ -13,16 +13,16 @@ import ch.schumm.security.policy.Policy;
 
 public class XmlPolicyLoader {
 	
-	public List<Policy> loadPolicies() {
+	public List<Policy> loadPoliciesForFilename(String filename) {
 		List<Policy> policies = new ArrayList<Policy>(); 
 		PolicyConfig policyConfig;
         try {
             JAXBContext context = JAXBContext.newInstance(PolicyConfig.class);
             Unmarshaller u = context.createUnmarshaller(); 
-            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("policies.xml"); 
+            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filename); 
             policyConfig = (PolicyConfig) u.unmarshal(resourceAsStream);
         } catch (JAXBException e) {
-            throw new PolicyException("Fehler beim Laden der Policy", e); 
+            throw new PolicyException("Fehler beim Laden des Policy-Config-Files: " + filename, e); 
         }
 		
 		List<String> names = policyConfig.getPolicies();
@@ -33,12 +33,16 @@ public class XmlPolicyLoader {
 		return policies; 
 	}
 	
+	public List<Policy> loadPolicies(){
+	    return loadPoliciesForFilename("policies.xml"); 
+	}
+	
 	protected Policy instatiatePolicyForName(String name)  {
 		Object newInstance = null;
         try {
             newInstance = Class.forName(name).newInstance();
         } catch (Exception e) {
-            throw new PolicyException("Fehler beim instantiieren der Policy: ", e); 
+            throw new PolicyException("Fehler beim Instantiieren der Policy: " + name, e); 
         }
 		return (Policy) newInstance; 
 		

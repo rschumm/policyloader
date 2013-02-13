@@ -2,4 +2,5 @@
 <policyConfig>
     <policies>ch.schumm.security.policy.ErstePolicy</policies>
     <policies>ch.schumm.security.policy.ZweitePolicy</policies>
+    <policies>ch.schumm.security.policy.ArmePolicy</policies>
 </policyConfig>

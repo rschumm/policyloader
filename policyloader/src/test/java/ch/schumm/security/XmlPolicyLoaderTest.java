@@ -1,11 +1,13 @@
 package ch.schumm.security;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Test;
 
+import ch.schumm.security.policy.ArmePolicy;
 import ch.schumm.security.policy.Policy;
 
 public class XmlPolicyLoaderTest {
@@ -18,6 +20,7 @@ public class XmlPolicyLoaderTest {
 		
 		assertEquals("eins", policies.get(0).getName()); 
 		assertEquals("zwei", policies.get(1).getName()); 
+		assertEquals(2, policies.size()); 
 		
 	}
 	
@@ -26,9 +29,15 @@ public class XmlPolicyLoaderTest {
 	public void testInstatiate() {
 		XmlPolicyLoader loader = new XmlPolicyLoader(); 
 		Policy policyForName = loader.instatiatePolicyForName("ch.schumm.security.policy.ErstePolicy");
-		assertEquals("eins", policyForName.getName()); 
-		
-		
+		assertEquals("eins", policyForName.getName()); 	
+	}
+	
+	@Test
+	public void testIsIgnored(){
+	    ArmePolicy armePolicy = new ArmePolicy(); 
+	    XmlPolicyLoader loader = new XmlPolicyLoader(); 
+	    boolean ignored = loader.isIgnored(armePolicy);
+	    assertTrue(ignored);   
 	}
 
 }

@@ -1,10 +1,8 @@
 package ch.schumm.security;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
-
-import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
@@ -13,7 +11,7 @@ import ch.schumm.security.policy.Policy;
 public class PolicyLoaderTest {
 
 	@Test
-	public void testLoader() throws JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public void testLoader() {
 		PolicyLoader policyLoader = new PolicyLoader();
 		
 		List<Policy> policies = policyLoader.loadPolicies();
@@ -25,7 +23,7 @@ public class PolicyLoaderTest {
 	
 	
 	@Test
-	public void testInstatiate() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public void testInstatiate() {
 		PolicyLoader loader = new PolicyLoader(); 
 		Policy policyForName = loader.instatiatePolicyForName("ch.schumm.security.policy.ErstePolicy");
 		assertEquals("eins", policyForName.getName()); 

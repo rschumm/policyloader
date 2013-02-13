@@ -13,12 +13,17 @@ import ch.schumm.security.policy.Policy;
 
 public class PolicyLoader {
 	
-	public List<Policy> loadPolicies() throws JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public List<Policy> loadPolicies() {
 		List<Policy> policies = new ArrayList<Policy>(); 
-		JAXBContext context = JAXBContext.newInstance(PolicyConfig.class);
-		Unmarshaller u = context.createUnmarshaller(); 
-		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("policies.xml"); 
-		PolicyConfig policyConfig = (PolicyConfig) u.unmarshal(resourceAsStream);
+		PolicyConfig policyConfig;
+        try {
+            JAXBContext context = JAXBContext.newInstance(PolicyConfig.class);
+            Unmarshaller u = context.createUnmarshaller(); 
+            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("policies.xml"); 
+            policyConfig = (PolicyConfig) u.unmarshal(resourceAsStream);
+        } catch (JAXBException e) {
+            throw new PolicyException("Fehler beim Laden der Policy", e); 
+        }
 		
 		List<String> names = policyConfig.getPolicies();
 		for (String name : names) {
@@ -28,8 +33,13 @@ public class PolicyLoader {
 		return policies; 
 	}
 	
-	protected Policy instatiatePolicyForName(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		Object newInstance = Class.forName(name).newInstance();
+	protected Policy instatiatePolicyForName(String name)  {
+		Object newInstance = null;
+        try {
+            newInstance = Class.forName(name).newInstance();
+        } catch (Exception e) {
+            throw new PolicyException("Fehler beim instantiieren der Policy: ", e); 
+        }
 		return (Policy) newInstance; 
 		
 	}

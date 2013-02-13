@@ -1,6 +1,6 @@
 package ch.schumm.security;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,8 @@ public class PolicyLoader {
 		List<Policy> policies = new ArrayList<Policy>(); 
 		JAXBContext context = JAXBContext.newInstance(PolicyConfig.class);
 		Unmarshaller u = context.createUnmarshaller(); 
-		PolicyConfig policyConfig = (PolicyConfig) u.unmarshal(new File("policies.xml"));
+		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("policies.xml"); 
+		PolicyConfig policyConfig = (PolicyConfig) u.unmarshal(resourceAsStream);
 		
 		List<String> names = policyConfig.getPolicies();
 		for (String name : names) {

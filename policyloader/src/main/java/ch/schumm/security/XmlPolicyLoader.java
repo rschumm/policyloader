@@ -12,6 +12,11 @@ import javax.xml.bind.Unmarshaller;
 
 import ch.schumm.security.policy.Policy;
 
+/**
+ * Lädt Policies, welche im File policies.xml eingetragen sind. 
+ * @author C709360
+ *
+ */
 public class XmlPolicyLoader {
 
     public List<Policy> loadPoliciesForFilename(String filename) {
@@ -41,14 +46,14 @@ public class XmlPolicyLoader {
     }
 
     protected Policy instatiatePolicyForName(String name) {
-        Object newInstance = null;
+        Policy policy = null;
         try {
-            newInstance = Class.forName(name).newInstance();
+            Object newInstance = Class.forName(name).newInstance();
+            policy = (Policy) newInstance;
         } catch (Exception e) {
             throw new PolicyException("Fehler beim Instantiieren der Policy: " + name, e);
         }
-        return (Policy) newInstance;
-
+        return policy;
     }
 
     public static void main(String[] args) throws JAXBException {

@@ -15,6 +15,7 @@ public class Kontaktparty {
             trm= exp.divide(n);
             if(trm.equals(bi(0))) return sum; 
             sum = sum.add(trm.multiply(sgn)); 
+            //asdfasf
             
         }
     }
